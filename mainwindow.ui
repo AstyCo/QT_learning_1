@@ -16,27 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTableWidget" name="tableWidget">
-      <property name="rowCount">
-       <number>0</number>
-      </property>
-      <property name="columnCount">
-       <number>2</number>
-      </property>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>150</number>
-      </attribute>
-      <column>
-       <property name="text">
-        <string>Номер зачетки</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Фамилия студента</string>
-       </property>
-      </column>
-     </widget>
+     <widget class="QTableView" name="tableView"/>
     </item>
     <item>
      <widget class="QPushButton" name="newStudentButton">
