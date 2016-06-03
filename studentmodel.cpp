@@ -6,12 +6,12 @@
 StudentModel::StudentModel(QObject *parent)
     :QAbstractTableModel(parent)
 {
-
+    m_studentList.clear();
 }
 
 int StudentModel::rowCount(const QModelIndex &parent) const
 {
-    return studentList.size();
+    return m_studentList.size();
 }
 
 int StudentModel::columnCount(const QModelIndex &parent) const
@@ -19,23 +19,23 @@ int StudentModel::columnCount(const QModelIndex &parent) const
     return Student::STUD_FIELD_CNT;
 }
 
-bool StudentModel::insertRows(int row, int count, const QModelIndex &parent)
-{
-    beginInsertRows(parent,row,row+count-1);
+//bool StudentModel::insertRows(int row, int count, const QModelIndex &parent)
+//{
+//    beginInsertRows(parent,row,row+count-1);
 
-    for(int i=0 ; i<count ; ++i)
-        studentList.insert(row,"");
+//    for(int i=0 ; i<count ; ++i)
+//        studentList.insert(row,"");
 
-    endInsertRows();
-    return true;
-}
+//    endInsertRows();
+//    return true;
+//}
 
 bool StudentModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent,row,row+count-1);
 
     for(int i=0; i<count ; ++i)
-        studentList.removeAt(row);
+        m_studentList.removeAt(row);
 
     endRemoveRows();
     return true;
@@ -54,9 +54,9 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
         switch(col)
         {
         case 0:
-            return studentList.at(row).getNum();
+            return m_studentList.at(row).getNum();
         case 1:
-            return studentList.at(row).getFio();
+            return m_studentList.at(row).getFio();
         default:
             return QVariant();
         }
@@ -77,10 +77,10 @@ bool StudentModel::setData(const QModelIndex &index, const QVariant &value, int 
         switch(col)
         {
         case 0:
-            studentList.at(row).setNum(value.toInt());
+            m_studentList[row].setNum(value.toInt());
             break;
         case 1:
-            studentList.at(row).setFio(value.toString());
+            m_studentList[row].setFio(value.toString());
             break;
         default:
             return false;
@@ -99,16 +99,14 @@ QVariant StudentModel::headerData(int section, Qt::Orientation orientation, int 
             switch(section)
             {
             case 0:
-                return tr("Номер зачетки");
+                return tr("id");
             case 1:
-                return tr("Фамилия");
+                return tr("fio");
             default:
                 return QVariant();
             }
-        else if(section)
-            return QString::number(section);
         else
-            return QVariant();
+            return QString::number(section);
     }
     return QVariant();
 }
@@ -119,3 +117,53 @@ Qt::ItemFlags StudentModel::flags(const QModelIndex &index) const
         return Qt::ItemIsEnabled;
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable ;
 }
+
+bool StudentModel::addStudent(const Student &studentItem)
+{
+    beginInsertRows(QModelIndex(),m_studentList.size(),m_studentList.size());
+    m_studentList.append(studentItem);
+    endInsertRows();
+    return true;
+}
+
+void StudentModel::clear()
+{
+    if(!m_studentList.empty())
+        removeRows(0,m_studentList.size());
+    m_studentList.clear();
+}
+
+//bool StudentModel::insertStudent(int row, const Student &studentItem,const QModelIndex &parent)
+//{
+//    if(!insertRows(row,1,parent))
+//        return false;
+//    int num = studentItem.getNum();
+//    QString fio = studentItem.getFio();\
+
+//    QModelIndex numIndex=parent.child(row,0),
+//           fioIndex=parent.child(row,1);
+
+
+//    if(!setData(numIndex,num,Qt::DisplayRole))
+//    {
+//        removeRows(row,1,parent);
+//        return false;
+//    }
+//    {
+//        setData(fioIndex,fio,Qt::DisplayRole);
+
+//    return true;
+//    }
+//}
+
+QList<Student> StudentModel::studentList() const
+{
+    return m_studentList;
+}
+
+void StudentModel::setStudentList(const QList<Student> &value)
+{
+    m_studentList = value;
+    reset();
+}
+

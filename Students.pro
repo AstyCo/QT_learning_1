@@ -15,10 +15,20 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     student.cpp \
-    studentmodel.cpp
+    studentmodel.cpp \
+    loadfile.cpp \
+    delegate.cpp
 
 HEADERS  += mainwindow.h \
     student.h \
-    studentmodel.h
+    studentmodel.h \
+    loadfile.h \
+    delegate.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    loadfile.ui
+TRANSLATIONS    += app_ru.ts
+
+RESOURCES += \
+    src.qrc
+
