@@ -20,7 +20,7 @@ QWidget *Delegate::createEditor(QWidget *parent,
     {
         QSpinBox *editor = new QSpinBox(parent);
         editor->setMinimum(0);
-        editor->setMaximum(100);
+        editor->setMaximum(1000);
         return editor;
     }
     case 1:
@@ -45,6 +45,7 @@ void Delegate::setEditorData(QWidget *editor,
     }
     case 1:
     default:
+
         QItemDelegate::setEditorData(editor, index);
         break;
     }
@@ -64,8 +65,9 @@ void Delegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     }
     else
     {
-        QItemDelegate::setEditorData(editor, index);
+        QItemDelegate::setModelData(editor, model,index);
     }
+
 }
 
 void Delegate::updateEditorGeometry(QWidget *editor,
@@ -75,10 +77,9 @@ void Delegate::updateEditorGeometry(QWidget *editor,
     switch(col)
     {
     case 0:
-        editor->setGeometry(option.rect);
-        break;
     case 1:
     default:
+        editor->setGeometry(option.rect);
         break;
     }
 }

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,16 +17,21 @@ SOURCES += main.cpp\
     student.cpp \
     studentmodel.cpp \
     loadfile.cpp \
-    delegate.cpp
+    delegate.cpp \
+    loginsql.cpp \
+    editablesqlmodel.cpp
 
 HEADERS  += mainwindow.h \
     student.h \
     studentmodel.h \
     loadfile.h \
-    delegate.h
+    delegate.h \
+    loginsql.h \
+    editablesqlmodel.h
 
 FORMS    += mainwindow.ui \
-    loadfile.ui
+    loadfile.ui \
+    loginsql.ui
 TRANSLATIONS    += app_ru.ts
 
 RESOURCES += \
